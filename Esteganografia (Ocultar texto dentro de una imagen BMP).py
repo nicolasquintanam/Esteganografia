@@ -1,53 +1,86 @@
 # -*- encoding: 850 -*-
-########### El programa que se presenta a continuaci�n esconde un texto dentro de una imagen de manera que este no pueda ser visto por terceros a simple vista.
-############### IDENTIFICACI�N
-######### Versi�n: 1.6
+########### El programa que se presenta a continuación esconde un texto dentro de una imagen de manera que 
+########### este no pueda ser visto por terceros a simple vista.
+############### IDENTIFICACIÓN
+######### Versión: 1.6
 ######### Fecha: 28-02-2016
-############### BLOQUE DE DEFINICI�N
-############### DEFINICI�N DE CONSTANTES
-############### IMPORTACI�N DE FUNCIONES
-from PIL import Image                      #### Con esta librer�a se podr� abrir im�genes para luego editarlas internamente y posterior a eso guardarla, lo cual es esencial para este programa.
-from Tkinter import Tk                     #### Tkinter ayudar� al programa a dar una mejor interfaz al usuario y que sea m�s "did�ctico" con �ste.
-from tkFileDialog import askopenfilename   #### Funci�n de Tkinter que pedir� a trav�s de una ventana al usuario, la imagen que desea ingresar. Pero lo que realmente hace la funci�n es que cuando se ingrese la imagen, retornar� la ubicaci�n de dicho archivo. (Se complementar� con la funci�n importada PIL).
-from tkFileDialog import askdirectory      #### Funci�n de Tkinter que pedir� a trav�s de una ventana al usuario, la ubicaci�n de donde desea guardar su imagen nueva ya con el texto oculto.
-############### DEFINICI�N DE FUNCIONES
-####### Funci�n para transformar un texto ingresado por el usuario en formato string a otro string que contiene el mismo texto pero en sistema binario, cabe destacar que se le agrega el binario de 255 para efectos reversos del programa; al inicio para verificar que posee un texto la imagen; y el binario de 255 al final para ver hasta donde el programa tiene que leer.
+############### BLOQUE DE DEFINICIÓN
+############### DEFINICIÓN DE CONSTANTES
+############### IMPORTACIÓN DE FUNCIONES
+from PIL import Image                      #### Con esta librería se podrá abrir imágenes para luego editarlas 
+                                           #### internamente y posterior a eso guardarla, lo cual es esencial 
+                                           #### para este programa.
+
+from Tkinter import Tk                     #### Tkinter ayudará al programa a dar una mejor interfaz al usuario 
+                                           #### y que sea más "didáctico" con éste.
+
+from tkFileDialog import askopenfilename   #### Función de Tkinter que pedirá a través de una ventana al usuario, 
+                                           #### la imagen que desea ingresar. Pero lo que realmente hace la función
+                                           #### es que cuando se ingrese la imagen, retornará la ubicación de dicho
+                                           #### archivo. (Se complementará con la función importada PIL).
+from tkFileDialog import askdirectory      #### Función de Tkinter que pedirá a través de una ventana al usuario, 
+                                           #### la ubicación de donde desea guardar su imagen nueva ya con el texto oculto.
+
+############### DEFINICIÓN DE FUNCIONES
+
+####### Función para transformar un texto ingresado por el usuario en formato string a otro string que 
+####### contiene el mismo texto pero en sistema binario, cabe destacar que se le agrega el binario de 
+####### 255 para efectos reversos del programa; al inicio para verificar que posee un texto la imagen; 
+####### y el binario de 255 al final para ver hasta donde el programa tiene que leer.
 #### Entrada: Texto en formato string.
-#### Salida: String del texto ingresado por el usuario en sistema binario m�s el binario de 255 por delante y atr�s.
-## Ejemplo: "Texto: python ---->  codigoBinarioDelTexto = 1111111101110000011110010111010001101000011011110110111011111111" (Cabe destacar que el c�digo binario de "python" es 011100000111100101110100011010000110111101101110, pero para efectos del programa se le agregan el binario de 255 al principio y al final del texto).
+#### Salida: String del texto ingresado por el usuario en sistema binario más el binario de 255 por delante y atrás.
+## Ejemplo: "Texto: python ---->  codigoBinarioDelTexto = 1111111101110000011110010111010001101000011011110110111011111111" 
+## (Cabe destacar que el c�digo binario de "python" es 011100000111100101110100011010000110111101101110, pero para efectos 
+## del programa se le agregan el binario de 255 al principio y al final del texto).
 def transformarTextoABinario(textoIngresado):
     codigoAsciiDelTexto=[]
     for letra in textoIngresado:
-        codigoAsciiDelTexto.append(ord(letra)) ### ord() es una funci�n de Python para entregar el c�digo ASCII de una letra, valor, s�mbolo, etc.
+        codigoAsciiDelTexto.append(ord(letra)) ### ord() es una función de Python para entregar el código ASCII de una 
+                                               ### letra, valor, símbolo, etc.
     listaBinarioDelTexto = []
     for valor in codigoAsciiDelTexto:
         if valor<=63:
-            listaBinarioDelTexto.append(bin(valor).replace("b","0")) ### Cuando se aplica la funci�n bin(valor) retorna el binario con una "b", por ejemplo: 0b0100, por lo tanto se le cambia la "b" por un "0" o un string vacio "" dependiendo de la cantidad de bit que posee, ya que este no influye en su resultado, y en una funci�n m�s adelante se agregar�n "0" a la izquierda si el binario no posee 8 bit, puesto que eso es lo que se necesita para este programa.
+            listaBinarioDelTexto.append(bin(valor).replace("b","0")) ### Cuando se aplica la función bin(valor) retorna 
+                                                                     ### el binario con una "b", por ejemplo: 0b0100, por 
+                                                                     ### lo tanto se le cambia la "b" por un "0" o un 
+                                                                     ### string vacio "" dependiendo de la cantidad de bit 
+                                                                     ### que posee, ya que este no influye en su resultado, 
+                                                                     ### y en una función más adelante se agregarán "0" a 
+                                                                     ### la izquierda si el binario no posee 8 bit, puesto 
+                                                                     ### que eso es lo que se necesita para este programa.
         elif valor>=128:
-            listaBinarioDelTexto.append(bin(valor).lstrip("0").replace("b","")) ### La funci�n lstrip("x") elimina un valor x a una string temporalmente.
+            listaBinarioDelTexto.append(bin(valor).lstrip("0").replace("b","")) ### La función lstrip("x") elimina un valor 
+                                                                                ### x a una string temporalmente.
         else:
              listaBinarioDelTexto.append(bin(valor).replace("b",""))
         codigoBinarioDelTexto="".join(listaBinarioDelTexto)
-    return "11111111" + codigoBinarioDelTexto + "11111111" ### Se le agrega el binario de 255 para efectos reversos del programa; al inicio para verificar que posee un texto la imagen; y el binario de 255 al final para ver hasta donde el programa tiene que leer.
+    return "11111111" + codigoBinarioDelTexto + "11111111" ### Se le agrega el binario de 255 para efectos reversos del 
+                                                           ### programa; al inicio para verificar que posee un texto la 
+                                                           ### imagen; y el binario de 255 al final para ver hasta donde 
+                                                           ### el programa tiene que leer.
 
-####### Funci�n para ingresar una imagen al programa utilizando la librer�a PIL.
-#### Entrada: Ubicaci�n de la imagen, nombre y su formato.
-#### Salida: Imagen abierta en el programa para ser procesada, obteniendo de ellas informaci�n como cantidad de pixeles, formato, etc.
+####### Función para ingresar una imagen al programa utilizando la librería PIL.
+#### Entrada: Ubicación de la imagen, nombre y su formato.
+#### Salida: Imagen abierta en el programa para ser procesada, obteniendo de ellas información como cantidad de pixeles, 
+#### formato, etc.
 ## Ejemplo: "ubicacionArchivo = C:/Users/User/Desktop/ImagenAProcesar.bmp"
 def ingresarImagen(ubicacionArchivo):
-    archivoImagen = Image.open(ubicacionArchivo)  ### Aqu� se utiliza la funci�n importada "from PIL import Image".
+    archivoImagen = Image.open(ubicacionArchivo)  ### Aquí se utiliza la función importada "from PIL import Image".
     return archivoImagen
 
-####### Funci�n para descomponer la imagen ingresada por el usuario y obtener una lista de pixeles de RGB en binario.
-#### Entrada: Informaci�n de la imagen abierta ya ingresada por el usuario.
-#### Salida: Descomposici�n de la imagen en formato de lista de pixeles de RGB en binario.
+####### Función para descomponer la imagen ingresada por el usuario y obtener una lista de pixeles de RGB en binario.
+#### Entrada: Información de la imagen abierta ya ingresada por el usuario.
+#### Salida: Descomposición de la imagen en formato de lista de pixeles de RGB en binario.
 ## Ejemplo: "-----> [['1', '1', '1', '1', '1', '1', '1', '1'], ['1', '1', '1', '1', '1', '1', '1', '1']]"
 def descomponerImagenPorPixelesEnRgb(imagenAbierta):
-    pixeles = list(imagenAbierta.getdata())                     ### De la informaci�n de la imagen ingresada a trav�s de esta funci�n se obtienen los pixeles en formato de lista de RGB en decimal.
+    pixeles = list(imagenAbierta.getdata())                     ### De la información de la imagen ingresada a través 
+                                                                ### de esta función se obtienen los pixeles en formato 
+                                                                ### de lista de RGB en decimal.
     binario = []
     for rgb in pixeles:
         for color in rgb:
-            binario.append(bin(color).replace("b",""))          ### De la lista de pixeles en decimal se transforma a una lista de binario.
+            binario.append(bin(color).replace("b",""))          ### De la lista de pixeles en decimal se transforma a una 
+                                                                ### lista de binario.
     listaBinarioArreglada=[]
     for contador in range(len(binario)):
         listaBinarioArreglada.append(list(binario[contador]))   
@@ -74,7 +107,9 @@ def descomponerImagenPorPixelesEnRgb(imagenAbierta):
         elif len(valor) == 10:
             valor.remove("0")
             valor.remove("0")
-    return listaBinarioArreglada                                ### Se arregla la lista de binarios ya que algunos binarios poseen cantidad de bit que var�an entre 2 y 9, por lo que se arregla para que todas posean 8 bit.
+    return listaBinarioArreglada                                ### Se arregla la lista de binarios ya que algunos binarios 
+                                                                ### poseen cantidad de bit que var�an entre 2 y 9, por lo 
+                                                                ### que se arregla para que todas posean 8 bit.
 
 ####### Funci�n para utilizar la t�cnica del bit menos significativo.
 ###### La t�cnica del bit menos significativo consiste en intercambiar el valor num�rico del �ltimo n�mero de cada byte en binario por otro valor que forme una palabra, esta funci�n ser� la m�s importante dentro del programa ya que con esta funci�n se podr� esconder el texto en la imagen.
