@@ -108,23 +108,30 @@ def descomponerImagenPorPixelesEnRgb(imagenAbierta):
             valor.remove("0")
             valor.remove("0")
     return listaBinarioArreglada                                ### Se arregla la lista de binarios ya que algunos binarios 
-                                                                ### poseen cantidad de bit que var�an entre 2 y 9, por lo 
+                                                                ### poseen cantidad de bit que varían entre 2 y 9, por lo 
                                                                 ### que se arregla para que todas posean 8 bit.
 
-####### Funci�n para utilizar la t�cnica del bit menos significativo.
-###### La t�cnica del bit menos significativo consiste en intercambiar el valor num�rico del �ltimo n�mero de cada byte en binario por otro valor que forme una palabra, esta funci�n ser� la m�s importante dentro del programa ya que con esta funci�n se podr� esconder el texto en la imagen.
-#### Entrada: Lista con cada valor num�rico en binario de los colores de cada pixel en la imagen, adem�s el texto que se quiere esconder en la imagen en binario.
+####### Funciónn para utilizar la técnica del bit menos significativo.
+###### La técnica del bit menos significativo consiste en intercambiar el valor numérico del último número de cada byte 
+###### en binario por otro valor que forme una palabra, esta función será la más importante dentro del programa ya que
+###### con esta función se podrá esconder el texto en la imagen.
+#### Entrada: Lista con cada valor numérico en binario de los colores de cada pixel en la imagen, además el texto que 
+#### se quiere esconder en la imagen en binario.
 #### Salida: La misma lista pero con el texto dentro de la imagen.
-## Ejemplo: "Texto = "01" -- [['1', '1', '1', '1', '1', '1', '1', '1'], ['1', '1', '1', '1', '1', '1', '1', '1']] -----> [['1', '1', '1', '1', '1', '1', '1', '0 #se cambia# '], ['1', '1', '1', '1', '1', '1', '1', '1 #se cambia# ']]"
+## Ejemplo: "Texto = "01" -- [['1', '1', '1', '1', '1', '1', '1', '1'], ['1', '1', '1', '1', '1', '1', '1', '1']] 
+## -----> [['1', '1', '1', '1', '1', '1', '1', '0 #se cambia# '], ['1', '1', '1', '1', '1', '1', '1', '1 #se cambia# ']]"
 def utilizarTecnicaBitMenosSignificativo(texto, descomposicionImagen):
     for cnt in range(len(texto)):
         descomposicionImagen[cnt][7] = texto[cnt]
     return descomposicionImagen
 
-####### Funci�n para transformar la lista  que contiene dentro de ella listas de RGB de los pixeles a una lista de los RGB de los pixeles en decimal.
+####### Función para transformar la lista  que contiene dentro de ella listas de RGB de los pixeles a una lista de los 
+####### RGB de los pixeles en decimal.
 #### Entrada: Lista de listas de RGB.
 #### Salida: Lista de RGB en decimal, agrupadas por pixeles.
-## Ejemplo: "[['1', '1', '1', '1', '1', '1', '1', '1'],['1', '1', '1', '1', '1', '1', '1', '1'],['1', '1', '1', '1', '1', '1', '1', '1'],['1', '1', '1', '1', '1', '1', '1', '1'],['1', '1', '1', '1', '1', '1', '1', '1'],['1', '1', '1', '1', '1', '1', '1', '1']] -----> [(255,255,255), (255,255,255)]"
+## Ejemplo: "[['1', '1', '1', '1', '1', '1', '1', '1'],['1', '1', '1', '1', '1', '1', '1', '1'],
+## ['1', '1', '1', '1', '1', '1', '1', '1'],['1', '1', '1', '1', '1', '1', '1', '1'],
+## ['1', '1', '1', '1', '1', '1', '1', '1'],['1', '1', '1', '1', '1', '1', '1', '1']] -----> [(255,255,255), (255,255,255)]"
 def transformarListadeListaRgbaListadeListasAsciiAgrupada(lista):
     listaBinario=[]
     for rgb in lista:
@@ -134,7 +141,8 @@ def transformarListadeListaRgbaListadeListasAsciiAgrupada(lista):
         listaBinario.append(rgbBinario)
     listaDecimal=[]
     for binario in listaBinario:
-        listaDecimal.append(int(str(binario),2))                        ### int(str(binario),2) se utiliza para transformar de binario a decimal, en este caso a c�digo ASCII.
+        listaDecimal.append(int(str(binario),2))                        ### int(str(binario),2) se utiliza para transformar 
+                                                                        ### de binario a decimal, en este caso a código ASCII.
     listaAgrupada=[]
     contador=0
     while contador < len(listaDecimal):
