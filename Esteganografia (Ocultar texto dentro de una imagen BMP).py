@@ -30,7 +30,7 @@ from tkFileDialog import askdirectory      #### Función de Tkinter que pedirá 
 #### Entrada: Texto en formato string.
 #### Salida: String del texto ingresado por el usuario en sistema binario más el binario de 255 por delante y atrás.
 ## Ejemplo: "Texto: python ---->  codigoBinarioDelTexto = 1111111101110000011110010111010001101000011011110110111011111111" 
-## (Cabe destacar que el c�digo binario de "python" es 011100000111100101110100011010000110111101101110, pero para efectos 
+## (Cabe destacar que el código binario de "python" es 011100000111100101110100011010000110111101101110, pero para efectos 
 ## del programa se le agregan el binario de 255 al principio y al final del texto).
 def transformarTextoABinario(textoIngresado):
     codigoAsciiDelTexto=[]
@@ -150,10 +150,12 @@ def transformarListadeListaRgbaListadeListasAsciiAgrupada(lista):
         for cntAux in range(3):
             listaTemporal.append(listaDecimal[contador])
             contador = contador + 1
-        listaAgrupada.append(tuple(listaTemporal))                      ### La funci�n tuple() lo que hace es transformar una lista en formato [1,2,3] a una lista (1,2,3), se realiza esta funci�n para posteriormente guardarla como imagen.
+        listaAgrupada.append(tuple(listaTemporal))                      ### La Función tuple() lo que hace es transformar una lista 
+                                                                        ### en formato [1,2,3] a una lista (1,2,3), se realiza esta 
+                                                                        ### función para posteriormente guardarla como imagen.
     return listaAgrupada
 
-####### Funci�n para crear una imagen a partir de la lista y de la imagen ingresada.
+####### Función para crear una imagen a partir de la lista y de la imagen ingresada.
 #### Entrada: Lista de tuplas para intercambiar cada pixel de la imagen original, la imagen original, y el nombre de la imagen nueva.
 #### Salida: Guardar una imagen en formato 'bmp'.
 ## Ejemplo: "[(255,255,255), (255,255,255)] -- Imagen -----> imagenNueva = [(255,255,255), (255,255,255)]"
@@ -165,15 +167,18 @@ def crearImagenAPartirDeLista(lista, imagen, nombreArchivoGuardado):
     while cnt<len(lista):
         for cnt2 in range(coordenadaY):
             for cnt1 in range(coordenadaX):
-                pix[cnt1, cnt2] = lista[cnt]    ### Se van intercambiando cada valor de las coordenadas en la imagen ingresada con los de la lista de imagen que posee el texto.
+                pix[cnt1, cnt2] = lista[cnt]    ### Se van intercambiando cada valor de las coordenadas en la imagen ingresada 
+                                                ### con los de la lista de imagen que posee el texto.
                 cnt = cnt + 1
             cnt1 = 0
     return imagen.save(nombreArchivoGuardado)
 
-####### Funci�n para obtener una lista de listas con un supuesto texto escrito en binario agrupados por byte.
+####### Función para obtener una lista de listas con un supuesto texto escrito en binario agrupados por byte.
 #### Entrada: Lista que contiene los RGB de una imagen en binario.
-#### Salida: Lista que contiene agrupados por cada 8 elementos el �ltimo bit de cada supuesto texto.
-## Ejemplo: "lista: [['1', '1', '1', '1', '1', '1', '1', '1'], ['1', '1', '1', '1', '1', '1', '1', '1'], ['1', '1', '1', '1', '1', '1', '1', '1'], ['1', '1', '1', '1', '1', '1', '1', '1']] ----->['11111111', '11111111', '11111111', '11111111']" 
+#### Salida: Lista que contiene agrupados por cada 8 elementos el último bit de cada supuesto texto.
+## Ejemplo: "lista: [['1', '1', '1', '1', '1', '1', '1', '1'], ['1', '1', '1', '1', '1', '1', '1', '1'], 
+## ['1', '1', '1', '1', '1', '1', '1', '1'], ['1', '1', '1', '1', '1', '1', '1', '1']] ----->
+## ['11111111', '11111111', '11111111', '11111111']" 
 def listaAgrupadaSupuestoTexto(lista):
     bitSupuestoTexto = []
     for cnt in range(len(lista)):
@@ -193,24 +198,25 @@ def listaAgrupadaSupuestoTexto(lista):
         listaStringBin.append("".join(bit))
     return listaStringBin
 
-####### Funci�n para transformar la lista de binario en una lista de decimales (supuesto c�digo ASCII).
-#### Entrada: Lista que contiene supuesto c�digo en binario separados por letra.
-#### Salida: Lista que contiene los decimales de los binarios, es decir supuesto c�digo ASCII separados por letras.
-## Ejemplo: "['11111111', '11111111', '11111111', '11111111', '11111111', '11111111', '11111111'] --> [255, 255, 255, 255, 255, 255, 255]"
+####### Función para transformar la lista de binario en una lista de decimales (supuesto código ASCII).
+#### Entrada: Lista que contiene supuesto código en binario separados por letra.
+#### Salida: Lista que contiene los decimales de los binarios, es decir supuesto código ASCII separados por letras.
+## Ejemplo: "['11111111', '11111111', '11111111', '11111111', '11111111', '11111111', '11111111'] --> 
+## [255, 255, 255, 255, 255, 255, 255]"
 def transformarBinarioADecimal(lista):
     listaDecimales=[]
     for binario in lista:
         listaDecimales.append(int(binario, 2))
     return listaDecimales
 
-####### Funci�n para transformar la lista de supuesto texto en c�digo ASCII a una lista de caracteres.
-#### Entrada: Supuesto texto en c�digo ASCII separados por letras en formato de lista.
+####### Función para transformar la lista de supuesto texto en código ASCII a una lista de caracteres.
+#### Entrada: Supuesto texto en código ASCII separados por letras en formato de lista.
 #### Salida: Supuesto texto en caracteres por letras en una lista.
 ## Ejemplo: "[104, 111, 108, 97] ---->  "hola""
 def transformarAsciiCaracter(lista):
     listaCaracteres=[]
     if lista[0] == 255:
-        for ascii in lista[1:len(lista)]:  ### Se inicia desde el 1 para darle la condici�n si posee texto o no la imagen.
+        for ascii in lista[1:len(lista)]:  ### Se inicia desde el 1 para darle la condición si posee texto o no la imagen.
             if ascii==255:
                 return "".join(listaCaracteres)    
             else:
@@ -219,17 +225,19 @@ def transformarAsciiCaracter(lista):
         return ""
     return "".join(listaCaracteres)
 
-####### Funci�n para mostrar al usuario cuantos caracteres puede escribir como m�ximo.
-#### Entrada: La ubicaci�n de la imagen.
+####### Función para mostrar al usuario cuantos caracteres puede escribir como máximo.
+#### Entrada: La ubicación de la imagen.
 #### Salida: Cantidad de caracteres disponibles por la imagen.
 def cantidadMaximaDeCaracteres(ubicacionImagen):
     archivoImagen = Image.open(ubicacionImagen)
     pixeles= list(archivoImagen.getdata())
-    return int((len(pixeles))*3/8) - 16   ### A la cantidad de pixeles se le multiplica por 3 por el hecho de que un pixel tiene la capacidad de almacenar 3 byte, de un car�cter (1byte)
-                                          ### que posee 8 bit de acuerdo a la t�cnica que se est� utilizando, se divide por 8, por lo anteriormente indicado, y se le resta 16 ya que se 
-                                          ### agregaron 8 bit antes y despu�s del texto para verificar si una imagen posee un texto.
+    return int((len(pixeles))*3/8) - 16   ### A la cantidad de pixeles se le multiplica por 3 por el hecho de que un pixel 
+                                          ### tiene la capacidad de almacenar 3 byte, de un carácter (1byte)
+                                          ### que posee 8 bit de acuerdo a la técnica que se está utilizando, se divide por 8, 
+                                          ### por lo anteriormente indicado, y se le resta 16 ya que se 
+                                          ### agregaron 8 bit antes y después del texto para verificar si una imagen posee un texto.
 
-####### Funci�n de la opci�n 1 (opcion1) para guardar un texto en una imagen en formato BMP.
+####### Función de la opción 1 (opcion1) para guardar un texto en una imagen en formato BMP.
 #### Entrada: Texto dado por el usuario y el archivo de imagen donde se desea guardar el texto.
 #### Salida: Archivo de imagen en formato BMP con el texto oculto.
 def opcion1(texto, imagen, nombreArchivoGuardado):
@@ -241,7 +249,7 @@ def opcion1(texto, imagen, nombreArchivoGuardado):
     imagenCreada = crearImagenAPartirDeLista(agrupada,imagen1,nombreArchivoGuardado)
     return imagenCreada
 
-####### Funci�n de la opci�n 2 (opcion2) para encontrar un texto oculto dentro de una imagen.
+####### Función de la opción 2 (opcion2) para encontrar un texto oculto dentro de una imagen.
 #### Entrada: Archivo de imagen en formato BMP.
 #### Salida: Texto encontrado en la imagen.
 def opcion2(archivo):
@@ -252,49 +260,50 @@ def opcion2(archivo):
     caracteres = transformarAsciiCaracter(supuestoTextoAscii)
     return caracteres
 
-####### Funci�n para dar a elegir al usuario que camino desea seguir, si guardar un texto dentro de una imagen o encontrar el texto escondido en una imagen.
-#### Entrada: Opci�n 1 u opci�n 2.
-#### Salida: Si es opci�n 1, imagen guardada con texto dentro, si es opci�n 2 retornar� un texto.
+####### Función para dar a elegir al usuario que camino desea seguir, si guardar un texto dentro de una imagen o encontrar 
+####### el texto escondido en una imagen.
+#### Entrada: Opción 1 u opción 2.
+#### Salida: Si es opción 1, imagen guardada con texto dentro, si es opción 2 retornará un texto.
 def menu(opcion):
     if opcion == "1":
-        print "------------------------------------------------ \nUsted ha seleccionado la opci�n de esteganograf�a para ocultar texto en una imagen...\n"
-        iforelse = raw_input("-------------- INGRESANDO IMAGEN --------------- \n\nPresione 'ENTER' para ingresar la imagen en donde desea ocultar el texto. \nNOTA: El programa s�lo acepta im�genes en formato 'bmp'.\n")
+        print "------------------------------------------------ \nUsted ha seleccionado la opción de esteganografía para ocultar texto en una imagen...\n"
+        iforelse = raw_input("-------------- INGRESANDO IMAGEN --------------- \n\nPresione 'ENTER' para ingresar la imagen en donde desea ocultar el texto. \nNOTA: El programa sólo acepta imágenes en formato 'bmp'.\n")
         Tk().withdraw()
         imagen = askopenfilename()
         while imagen[-3:len(imagen)]!= "bmp" and imagen[-3:len(imagen)]!= "BMP":
-            iforelse = raw_input("Se ingres� un archivo incorrecto, recuerde que el programa s�lo acepta formato 'bmp', para ingresar nuevamente presione 'ENTER'.\n")
+            iforelse = raw_input("Se ingresó un archivo incorrecto, recuerde que el programa sólo acepta formato 'bmp', para ingresar nuevamente presione 'ENTER'.\n")
             Tk().withdraw()
             imagen = askopenfilename()
         print "ARCHIVO: ", imagen, "\n"
-        print "---------- INGRESANDO TEXTO A OCULTAR ----------\n\nPor favor ingrese el texto que desea ocultar...\nNOTA: Usted tiene un m�ximo de ",cantidadMaximaDeCaracteres(imagen)," caracteres disponibles."
+        print "---------- INGRESANDO TEXTO A OCULTAR ----------\n\nPor favor ingrese el texto que desea ocultar...\nNOTA: Usted tiene un máximo de ",cantidadMaximaDeCaracteres(imagen)," caracteres disponibles."
         texto = raw_input("Texto: ")
         if len(texto)<=cantidadMaximaDeCaracteres(imagen):
             ""
         else:
             texto = texto[0:cantidadMaximaDeCaracteres(imagen)]
-            print "La cantidad de caracteres del texto se excedi� del m�ximo, su texto se acortar� a ",cantidadMaximaDeCaracteres(imagen), " caracteres, su nuevo texto quedara como: ",texto,"..."
+            print "La cantidad de caracteres del texto se excedió del máximo, su texto se acortará a ",cantidadMaximaDeCaracteres(imagen), " caracteres, su nuevo texto quedara como: ",texto,"..."
         print "\n------------ GUARDANDO IMAGEN NUEVA ------------ \n"    
-        ifforelse = raw_input("a) Presione 'ENTER' para ingresar la ubicaci�n en donde desea guardar su imagen nueva. \n")
+        ifforelse = raw_input("a) Presione 'ENTER' para ingresar la ubicación en donde desea guardar su imagen nueva. \n")
         Tk().withdraw()
         dirSelected = askdirectory()
         while dirSelected == "":
-            ifforelse=raw_input("Ingresar ubicaci�n valida, presione 'ENTER' para intentarlo nuevamente.\n")
+            ifforelse=raw_input("Ingresar ubicación valida, presione 'ENTER' para intentarlo nuevamente.\n")
             Tk().withdraw()
             dirSelected = askdirectory()
         nombre = raw_input("b) Ingresar nombre de la imagen nueva: ")
         if len(nombre)>222:
-            print "\nSe ingres� un nombre muy largo para el archivo, el nombre de la imagen nueva se acortar� a nombre de archivo: \n", nombre[0:222]
+            print "\nSe ingresó un nombre muy largo para el archivo, el nombre de la imagen nueva se acortará a nombre de archivo: \n", nombre[0:222]
         nombreArchivoGuardado = dirSelected + "/" + nombre[0:221] + ".bmp"
         print "\nCargando... \n\n------------------------------------------------"
         opcion1(texto,imagen,nombreArchivoGuardado)
-        print "\nLa imagen se ingres� correctamente y el texto ingresado ya se ocult� dentro de �sta, su archivo nuevo se encuentra en: \n",nombreArchivoGuardado
+        print "\nLa imagen se ingresó correctamente y el texto ingresado ya se ocultó dentro de ést, su archivo nuevo se encuentra en: \n",nombreArchivoGuardado
     elif opcion == "2":
-        print "------------------------------------------------ \nUsted ha seleccionado la opci�n de esteganograf�a para encontrar el texto oculto en una imagen... \n\n-------------- INGRESANDO IMAGEN ---------------"
-        iffforelse = raw_input("Por favor ingrese 'ENTER' para obtener la ubicaci�n del archivo imagen BMP en donde desea verificar texto oculto. \nNOTA: El programa s�lo acepta im�genes en formato 'bmp'.\n")
+        print "------------------------------------------------ \nUsted ha seleccionado la opción de esteganografía para encontrar el texto oculto en una imagen... \n\n-------------- INGRESANDO IMAGEN ---------------"
+        iffforelse = raw_input("Por favor ingrese 'ENTER' para obtener la ubicación del archivo imagen BMP en donde desea verificar texto oculto. \nNOTA: El programa sólo acepta imágenes en formato 'bmp'.\n")
         Tk().withdraw()
         archivo = askopenfilename()
         while archivo[-3:len(archivo)] != "bmp":
-            iffforelse = raw_input("Se ingres� un archivo incorrecto, recuerde que el programa s�lo acepta formato .bmp, para ingresar nuevamente presione 'ENTER'.\n")
+            iffforelse = raw_input("Se ingresó un archivo incorrecto, recuerde que el programa sólo acepta formato .bmp, para ingresar nuevamente presione 'ENTER'.\n")
             Tk().withdraw()
             archivo = askopenfilename()
         print "ARCHIVO: ", archivo, "\n\nCargando... \n\n------------------------------------------------\n"
@@ -303,17 +312,18 @@ def menu(opcion):
         else:
             print "El texto oculto en la imagen es: \n", opcion2(archivo)
     else:
-        print "\n-------------------------------------------------------------------------------------------------------\nInformaci�n del programa.\n\nEl proyecto de esteganograf�a es un proyecto realizado por un grupo de estudiantes de la clase\nFundamentos de Computaci�n y Programaci�n de la Universidad de Santiago de Chile, con el fin de\naprender a elaborar programas computacinales para la resoluci�n de problemas de ingenier�a\naplicada a distintos contextos, usando lenguaje de programaci�n Python, mostrando preocupaci�n\npor la generalidad y las buenas pr�cticas de programaci�n, de forma cr�tica, pertinente y creativa,\nresguardando criterios de innovaci�n y emprendimiento(Seg�n programa del curso Fundamentos de\ncomputaci�n y programaci�n). \n\n-------------------------------------------------------------------------------------------------------\nFuncionamiento del programa. \n\nEl programa de esteganograf�a oculta un texto en una imagen (las dos ingresadas por el\nusuario), con la idea de que la imagen que salga del programa sea casi id�ntica a la ingresada\nanteriormente, y as� darle diferentes usos.\nPor otro lado tambi�n se da la opci�n al usuario  para ingresar una imagen y verificar si tiene\nun texto oculto en la imagen; si lo tiene mostrar el texto, y si no indicar al usuario que la\nimagen ingresada no posee un texto oculto."
+        print "\n-------------------------------------------------------------------------------------------------------\nInformación del programa.\n\nEl proyecto de esteganografía es un proyecto realizado por un grupo de estudiantes de la clase\nFundamentos de Computación y Programación de la Universidad de Santiago de Chile, con el fin de\naprender a elaborar programas computacinales para la resolución de problemas de ingeniería\naplicada a distintos contextos, usando lenguaje de programación Python, mostrando preocupación\npor la generalidad y las buenas prácticas de programación, de forma crítica, pertinente y creativa,\nresguardando criterios de innovación y emprendimiento(Según programa del curso Fundamentos de\ncomputación y programación). \n\n-------------------------------------------------------------------------------------------------------\nFuncionamiento del programa. \n\nEl programa de esteganografía oculta un texto en una imagen (las dos ingresadas por el\nusuario), con la idea de que la imagen que salga del programa sea casi idéntica a la ingresada\nanteriormente, y así darle diferentes usos.\nPor otro lado también se da la opción al usuario  para ingresar una imagen y verificar si tiene\nun texto oculto en la imagen; si lo tiene mostrar el texto, y si no indicar al usuario que la\nimagen ingresada no posee un texto oculto."
     return opcion
 
 ############### BLOQUE PRINCIPAL
 ########## ENTRADA
-opcion = raw_input("---------------------------------------------------\nBIENVENIDO AL PROGRAMA DE ESTEGANOGRAF�A (versi�n 1.6) \n\nPor favor escoja una opci�n:\na) Para ocultar texto en una imagen:             Ingrese n�mero 1\n\nb) Para obtener texto oculto en una imagen:      Ingrese n�mero 2 \n\nPara conocer la informaci�n de este programa: 	 Presione ENTER \n\nOpci�n: ")
+opcion = raw_input("---------------------------------------------------\nBIENVENIDO AL PROGRAMA DE ESTEGANOGRAFÍA (versión 1.6) \n\nPor favor escoja una opción:\na) Para ocultar texto en una imagen:             Ingrese número 1\n\nb) Para obtener texto oculto en una imagen:      Ingrese número 2 \n\nPara conocer la información de este programa: 	 Presione ENTER \n\nOpción: ")
 ########## PROCESAMIENTO
 while opcion != "1" and opcion != "2" and opcion != "":
-    opcion = raw_input("\nSe ingres� una opci�n incorrecta, por favor ingresar nuevamente: \na) Para ocultar texto en una imagen:             Ingrese n�mero 1 \n\nb) Para obtener texto oculto en una imagen:      Ingrese n�mero 2 \n\nOpci�n: ")
+    opcion = raw_input("\nSe ingresó una opción incorrecta, por favor ingresar nuevamente: \na) Para ocultar texto en una imagen:             Ingrese número 1 \n\nb) Para obtener texto oculto en una imagen:      Ingrese número 2 \n\nOpción: ")
 mostrarMenu = menu(opcion)
 ########## SALIDA
 mostrarMenu
 print "\nGracias por utilizar este programa..."""
-auxiliar = raw_input("") ### Se utiliza esta entrada auxiliar para que cuando se ejecute el programa en la consola de Python, no se cierre al termino de su proceso.
+auxiliar = raw_input("") ### Se utiliza esta entrada auxiliar para que cuando se ejecute el programa en la consola de Python, 
+                         ### no se cierre al termino de su proceso.
